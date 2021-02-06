@@ -1,104 +1,97 @@
 package com.example.t_foodies;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.t_foodies.Adapters.MainAdapter;
+import com.example.t_foodies.Models.AllCategories;
+import com.example.t_foodies.Models.CategoryContent;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerAdapter adapter;
-    private DatabaseReference mDatabase;
-    private FirebaseDatabase mFirebaseInstance;
-    private List<Foods> foodsArrayList = new ArrayList<>();
-
+    private MainAdapter adapter;
+    private ImageView imageView,imageSort;
+    private MaterialCardView materialCardView;
+    private TextView textNav;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        imageView=findViewById(R.id.search);
+        imageSort=findViewById(R.id.sort);
+        materialCardView=findViewById(R.id.materialCardView);
+        textNav =findViewById(R.id.nav);
 
-        initView();
-//        initFrag();
-//        hotels();
-    }
-    private void initView() {
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mDatabase = mFirebaseInstance.getReference("accessories");
-        recyclerView = findViewById(R.id.recycler);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
-        DividerItemDecoration  mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                linearLayoutManager.getOrientation());
-        recyclerView.addItemDecoration(mDividerItemDecoration);
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                foodsArrayList.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Foods foods = dataSnapshot1.getValue(Foods.class);
-                    foodsArrayList.add(foods);
-                }
-                adapter = new RecyclerAdapter(MainActivity.this, foodsArrayList);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-
-            }
-
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            startActivity(intent);
         });
+        imageSort.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            startActivity(intent);
+        });
+        materialCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            startActivity(intent);
+        });
+        textNav.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            startActivity(intent);
+        });
+
+
+
+
+        recyclerView =findViewById(R.id.recycler);
+        List<CategoryContent> categoryContents = new ArrayList<>();
+        categoryContents.add(new CategoryContent(1,R.drawable.food1));
+        categoryContents.add(new CategoryContent(2,R.drawable.food2));
+        categoryContents.add(new CategoryContent(3,R.drawable.food3));
+        categoryContents.add(new CategoryContent(4,R.drawable.food4));
+        categoryContents.add(new CategoryContent(5,R.drawable.food5));
+
+        List<CategoryContent> categoryContent2 = new ArrayList<>();
+        categoryContent2.add(new CategoryContent(1,R.drawable.hotel1));
+        categoryContent2.add(new CategoryContent(2,R.drawable.hotel2));
+        categoryContent2.add(new CategoryContent(3,R.drawable.hotel3));
+        categoryContent2.add(new CategoryContent(4,R.drawable.hotel4));
+        categoryContent2.add(new CategoryContent(5,R.drawable.hotel5));
+
+        List<CategoryContent> categoryContent3 = new ArrayList<>();
+        categoryContent3.add(new CategoryContent(1,R.drawable.fruit1));
+        categoryContent3.add(new CategoryContent(2,R.drawable.fruit2));
+        categoryContent3.add(new CategoryContent(3,R.drawable.fruit3));
+        categoryContent3.add(new CategoryContent(4,R.drawable.fruit4));
+        categoryContent3.add(new CategoryContent(5,R.drawable.fruit5));
+
+
+        List<AllCategories> allCategoriesList = new ArrayList<>();
+        allCategoriesList.add(new AllCategories("Today's best offer",categoryContents));
+        allCategoriesList.add(new AllCategories("Restaurants &amp; Bars near me",categoryContent2));
+        allCategoriesList.add(new AllCategories("Most Popular",categoryContent3));
+
+        setMainCategoryRecycler(allCategoriesList);
+
+
+
     }
-//    private void hotels() {
-//
-//        RecyclerView hotels = findViewById(R.id.hotelRec);
-//        mFirebaseInstance = FirebaseDatabase.getInstance();
-//        mDatabase = mFirebaseInstance.getReference("accessories");
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
-//        DividerItemDecoration  mDividerItemDecoration = new DividerItemDecoration(hotels.getContext(),
-//                linearLayoutManager.getOrientation());
-//        hotels.addItemDecoration(mDividerItemDecoration);
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                foodsArrayList.clear();
-//                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-//                    Foods foods = dataSnapshot1.getValue(Foods.class);
-//                    foodsArrayList.add(foods);
-//                }
-//                adapter = new RecyclerAdapter(MainActivity.this, foodsArrayList);
-//                hotels.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
-//
-//            }
-//
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
-//    private  void initFrag(){
-//        Hotels homeFragment = new Hotels();
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.main_content_frame,homeFragment,getString(R.string.home_tag));
-//        transaction.addToBackStack(getString(R.string.home_tag));
-//        transaction.commit();
-//
-//    }
+public  void setMainCategoryRecycler(List<AllCategories> allCategoriesList ){
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MainAdapter(this,allCategoriesList);
+        recyclerView.setAdapter(adapter);
+
+}
 
 }

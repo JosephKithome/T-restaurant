@@ -60,4 +60,7 @@ dependencies {
 
     // Add the dependencies for any other desired Firebase products
     // https://firebase.google.com/docs/android/setup#available-libraries
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.github.skydoves:transformationlayout:1.0.6"
 }
