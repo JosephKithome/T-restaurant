@@ -92,6 +92,7 @@ public  void setMainCategoryRecycler(List<AllCategories> allCategoriesList ){
         adapter = new MainAdapter(this,allCategoriesList);
         recyclerView.setAdapter(adapter);
 
+
 }
 
 }

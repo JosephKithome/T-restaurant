@@ -2,6 +2,7 @@ package com.example.t_foodies.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.t_foodies.ActivityDetails;
-import com.example.t_foodies.MainActivity;
 import com.example.t_foodies.Models.AllCategories;
 import com.example.t_foodies.Models.CategoryContent;
 import com.example.t_foodies.R;
@@ -55,36 +56,29 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.CategoryViewHo
             super(itemView);
             catTextTitle =itemView.findViewById(R.id.cat_title);
             recyclerView=itemView.findViewById(R.id.contentRec);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int i = getAdapterPosition();
-                    Context context1=v.getContext();
-                    Log.d("Click", String.valueOf(i));
-                    //gets the book from the arrayList
-                    Intent intent = new Intent(context1, ActivityDetails.class);
-                    context.startActivity(intent);
-
-                }
-            });
+            itemView.setOnClickListener(this::onClick);
 
         }
 
         @Override
         public void onClick(View v) {
             int i = getAdapterPosition();
-            Context context1=v.getContext();
             Log.d("Click", String.valueOf(i));
             //gets the book from the arrayList
-            Intent intent = new Intent(context1, ActivityDetails.class);
+            Intent intent = new Intent(context, ActivityDetails.class);
             context.startActivity(intent);
 
         }
     }
     private void setContentRecycler(RecyclerView recycler, List<CategoryContent> categoryContentList){
         CategoryRecyclerAdapter categoryRecyclerAdapter = new CategoryRecyclerAdapter(context,categoryContentList);
-        recycler.setLayoutManager(new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
+        LinearLayoutManager layoutManager= (new LinearLayoutManager(context,RecyclerView.HORIZONTAL,false));
         recycler.setAdapter(categoryRecyclerAdapter);
+        recycler.setLayoutManager(layoutManager);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recycler.getContext(),
+                layoutManager.getOrientation());
+        recycler.addItemDecoration(dividerItemDecoration);
 
     }
 
