@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.t_foodies.ActivityDetails;
+import com.example.t_foodies.MapsActivity;
 import com.example.t_foodies.Models.CategoryContent;
 import com.example.t_foodies.R;
 import com.google.android.material.imageview.ShapeableImageView;
@@ -65,8 +66,7 @@ public class CategoryRecyclerAdapter extends RecyclerView.Adapter<CategoryRecycl
         public void onClick(View v) {
             int i = getAdapterPosition();
             Log.d("Click", String.valueOf(i));
-            //gets the book from the arrayList
-            Intent intent = new Intent(context, ActivityDetails.class);
+            Intent intent = new Intent(context, MapsActivity.class);
             context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity) context).toBundle());
 
         }

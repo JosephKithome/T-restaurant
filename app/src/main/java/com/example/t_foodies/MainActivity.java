@@ -34,19 +34,19 @@ public class MainActivity extends AppCompatActivity {
         textNav =findViewById(R.id.nav);
 
         imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         });
         imageSort.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         });
         materialCardView.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         });
         textNav.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ActivityDetails.class);
+            Intent intent = new Intent(MainActivity.this,MapsActivity.class);
             startActivity(intent);
         });
 

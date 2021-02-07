@@ -17,7 +17,7 @@ import java.util.List;
 public class ActivityDetails extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MainAdapter adapter;
-    private Fragment fragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
